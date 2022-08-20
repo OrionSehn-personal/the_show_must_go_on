@@ -53,23 +53,23 @@ public class Beats : MonoBehaviour
         {
             if (Mathf.Abs(curTime - this.goodTime1))
             {
-                Debug.Log("correct inside box1")
+                Debug.Log("correct inside box1");
         }
 
-            if (Mathf.Abs(curTime - this.goodTime1))
+            if (Mathf.Abs(curTime - this.goodTime2))
             {
-                Debug.Log("correct inside box2")
+                Debug.Log("correct inside box2");
             }
         }
 
         if (Mathf.Abs(curTime - this.goodTime1))
         {
-            Debug.Log("inside box1")
+            Debug.Log("inside box1");
         }
 
-        if (Mathf.Abs(curTime - this.goodTime1))
+        if (Mathf.Abs(curTime - this.goodTime2))
         {
-            Debug.Log("inside box2")
+            Debug.Log("inside box2");
             }
 
 
