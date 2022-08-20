@@ -5,13 +5,14 @@ using UnityEngine;
 public class Beats : MonoBehaviour
 {
     public float start;
-    public float goodtime1;
-    public float goodtime2;
+    public float goodTime1;
+    public float goodTime2;
     public float speed;
     public float tolerance;
     public Vector3 spawnerLocation;
     private KeyCode correctInput;
 
+    // Creates a beat object, takes the location of the spawner, and the two instruments along the lane which it will pass.
     public Beats(
         KeyCode correctInput,
         int speed,
@@ -19,13 +20,12 @@ public class Beats : MonoBehaviour
         Vector3 spawnerLocation,
         Vector3 inputKeyA,
         Vector3 inputKeyB)
-    // Creates a beat object, takes the location of the spawner, and the two instruments along the lane which it will pass.
     {
 
         this.start = Time.time;
         this.speed = speed;
-        this.goodtime1 = this.start + ((inputKeyA - spawnerLocation)/speed)
-        this.goodtime2 = this.start + ((inputKeyB - spawnerLocation)/speed)
+        this.goodTime1 = this.start + ((inputKeyA - spawnerLocation) / speed);
+        this.goodTime2 = this.start + ((inputKeyB - spawnerLocation) / speed);
 
         this.correctInput = correctInput;
         this.tolerance = tolerance;
@@ -45,4 +45,34 @@ public class Beats : MonoBehaviour
     {
         
     }
+
+    void CheckNote(float curTime, KeyCode key)
+    {
+
+        if (key == correctInput)
+        {
+            if (Mathf.Abs(curTime - this.goodTime1))
+            {
+                Debug.Log("correct inside box1")
+        }
+
+            if (Mathf.Abs(curTime - this.goodTime1))
+            {
+                Debug.Log("correct inside box2")
+            }
+        }
+
+        if (Mathf.Abs(curTime - this.goodTime1))
+        {
+            Debug.Log("correct inside box1")
+        }
+
+        if (Mathf.Abs(curTime - this.goodTime1))
+        {
+            Debug.Log("correct inside box2")
+            }
+
+
+    }
+
 }
