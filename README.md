@@ -1,3 +1,5 @@
-# the_show_must_go_on
+# The Show Must Go On
 
-using unity version: 2022.1.13f1
+A game about music, chaos, and persevering.
+
+Unity Version: 2022.1.13f1
