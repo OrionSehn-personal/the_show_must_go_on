@@ -1353,3 +1353,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &5338573599996656423
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833515, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338573598816833516, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: lane1GO
+      value: 
+      objectReference: {fileID: 692889445}
+    - target: {fileID: 5338573598816833516, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: lane2GO
+      value: 
+      objectReference: {fileID: 1841679611}
+    - target: {fileID: 5338573598816833516, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: lane3GO
+      value: 
+      objectReference: {fileID: 132578250}
+    - target: {fileID: 5338573598816833516, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: lane4GO
+      value: 
+      objectReference: {fileID: 1448213343}
+    - target: {fileID: 5338573598816833517, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
+      propertyPath: m_Name
+      value: Lanes Animator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3c9896efb3c7856409bf3c3f34238593, type: 3}
