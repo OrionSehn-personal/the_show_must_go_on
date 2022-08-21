@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     private Queue<Beats> beatsInput2 = new Queue<Beats> ();
     private Queue<Beats> beatsInput3 = new Queue<Beats> ();
 
+    [SerializeField] // Debug line DELETE
+    private static readonly GameManager gameManager = FindObjectOfType<GameManager>();
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,51 +39,64 @@ public class Player : MonoBehaviour
         {
             // if good time.
             // else good time.
-            if (beatsInput0.Peek().CheckNote())
+            int score = beatsInput0.Peek().CheckNote();
+            if (score > 0)
             {
-                Debug.Log("GOOOOD TIME");
+                gameManager.AddScore(score);
+                Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
             }
             else
             {
-                Debug.Log("YOUR BAD TIME");
+                Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
+                gameManager.SubtractScore(score);
             }
         }
         else if (Input.GetKeyDown(inputs[1]) && beatsInput1.Count != 0)
         {
             // if good time.
             // else good time.
-            if (beatsInput1.Peek().CheckNote())
+            int score = beatsInput1.Peek().CheckNote();
+            if (score > 0)
             {
-                Debug.Log("GOOOOD TIME");
+                gameManager.AddScore(score);
+                Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
             }
             else
             {
-                Debug.Log("YOUR BAD TIME");
+                Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
+                gameManager.SubtractScore(score);
             }
         }
         else if (Input.GetKeyDown(inputs[2]) && beatsInput2.Count != 0)
         {
             // if good time.
             // else good time.
-            if (beatsInput2.Peek().CheckNote()){
-                Debug.Log("GOOOOD TIME");
+            int score = beatsInput2.Peek().CheckNote();
+            if (score > 0)
+            {
+                Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
+                gameManager.AddScore(score);
             }
             else
             {
-                Debug.Log("YOUR BAD TIME");
+                Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
+                gameManager.SubtractScore(score);
             }
         }
         else if (Input.GetKeyDown(inputs[3]) && beatsInput3.Count != 0)
         {
             // if good time.
             // else good time.
-            if (beatsInput3.Peek().CheckNote())
+            int score = beatsInput3.Peek().CheckNote();
+            if (score > 0)
             {
-                Debug.Log("GOOOOD TIME");
+                Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
+                gameManager.AddScore(score);
             }
             else
             {
-                Debug.Log("YOUR BAD TIME");
+                Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
+                gameManager.SubtractScore(score);
             }
         }
 

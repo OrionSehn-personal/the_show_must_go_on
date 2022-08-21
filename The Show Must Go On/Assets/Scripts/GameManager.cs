@@ -149,4 +149,13 @@ public class GameManager : MonoBehaviour
         player.AddBeat(keyType, beat);
     }
 
+    public void AddScore(int value)
+    {
+        score += value;
+    }
+
+    public void SubtractScore(int value)
+    {
+        score -= value;
+    }
 }

@@ -75,22 +75,22 @@ public class Beats : MonoBehaviour
         player.DequeueBeat(correctInput);
     }
 
-    public bool CheckNote()
+    public int CheckNote()
     {
         Debug.Log("Good time 1 = " + goodTime1 + startTime);
         Debug.Log("Good time 2 = " + goodTime2 + startTime);
         if(Time.time < goodTime1 + tolerance + startTime && Time.time > goodTime1 - tolerance + startTime)
         {
             Destroy(gameObject);
-            return true;
+            return 20;
         }
         else if (Time.time < goodTime2 + tolerance + startTime && Time.time > goodTime2 - tolerance + startTime)
         {
             Destroy(gameObject);
-            return true;
+            return 10;
         }
         Destroy(gameObject);
-        return false;
+        return -20;
     }
 
     //void CheckNote(float curTime, KeyCode key)
