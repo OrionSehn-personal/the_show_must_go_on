@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private Queue<Beats> beatsInput2 = new Queue<Beats> ();
     private Queue<Beats> beatsInput3 = new Queue<Beats> ();
 
+    private ConductorAnimationController conductor;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,6 +27,11 @@ public class Player : MonoBehaviour
             boxes[i] = child.gameObject;
             i++;
         }
+    }
+
+    private void Start()
+    {
+        conductor = FindObjectOfType<ConductorAnimationController>();
     }
 
     /// <summary>
@@ -39,6 +46,7 @@ public class Player : MonoBehaviour
             if (beatsInput0.Peek().CheckNote())
             {
                 Debug.Log("GOOOOD TIME");
+                conductor.DoFlourishAnimation();
             }
             else
             {
@@ -52,6 +60,7 @@ public class Player : MonoBehaviour
             if (beatsInput1.Peek().CheckNote())
             {
                 Debug.Log("GOOOOD TIME");
+                conductor.DoFlourishAnimation();
             }
             else
             {
@@ -64,6 +73,7 @@ public class Player : MonoBehaviour
             // else good time.
             if (beatsInput2.Peek().CheckNote()){
                 Debug.Log("GOOOOD TIME");
+                conductor.DoFlourishAnimation();
             }
             else
             {
@@ -77,6 +87,7 @@ public class Player : MonoBehaviour
             if (beatsInput3.Peek().CheckNote())
             {
                 Debug.Log("GOOOOD TIME");
+                conductor.DoFlourishAnimation();
             }
             else
             {
