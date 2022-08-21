@@ -5,7 +5,7 @@ using UnityEngine;
 public class Beats : MonoBehaviour
 {
     private bool horizontalMovement = true;
-    public float start;
+    public float startTime;
     public float goodTime1;
     public float goodTime2;
     public float speed;
@@ -56,10 +56,10 @@ public class Beats : MonoBehaviour
         Vector3 spawnerLocation, Vector3 inputKeyA, Vector3 inputKeyB, bool horizontalMovement)
     {
         this.player = player;
-        this.start = Time.time;
+        this.startTime = Time.time;
         this.speed = speed;
-        this.goodTime1 = this.start + (Vector3.Distance(inputKeyA, spawnerLocation) / speed);
-        this.goodTime2 = this.start + (Vector3.Distance(inputKeyB, spawnerLocation) / speed);
+        this.goodTime1 = Mathf.Abs((Vector3.Distance(inputKeyA, spawnerLocation) / speed));
+        this.goodTime2 = Mathf.Abs((Vector3.Distance(inputKeyB, spawnerLocation) / speed));
         //this.goodTime1 = this.start + ((inputKeyA - spawnerLocation) / speed);
         //this.goodTime2 = this.start + ((inputKeyB - spawnerLocation) / speed);
 
@@ -77,8 +77,20 @@ public class Beats : MonoBehaviour
 
     public bool CheckNote()
     {
+        Debug.Log("Good time 1 = " + goodTime1 + startTime);
+        Debug.Log("Good time 2 = " + goodTime2 + startTime);
+        if(Time.time < goodTime1 + tolerance + startTime && Time.time > goodTime1 - tolerance + startTime)
+        {
+            Destroy(gameObject);
+            return true;
+        }
+        else if (Time.time < goodTime2 + tolerance + startTime && Time.time > goodTime2 - tolerance + startTime)
+        {
+            Destroy(gameObject);
+            return true;
+        }
         Destroy(gameObject);
-        return true;
+        return false;
     }
 
     //void CheckNote(float curTime, KeyCode key)

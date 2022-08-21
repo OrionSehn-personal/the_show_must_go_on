@@ -36,33 +36,52 @@ public class Player : MonoBehaviour
         {
             // if good time.
             // else good time.
-            Debug.Log("RIGHT");
-            beatsInput0.Peek().CheckNote();
-            //beatsInput0.Dequeue();
+            if (beatsInput0.Peek().CheckNote())
+            {
+                Debug.Log("GOOOOD TIME");
+            }
+            else
+            {
+                Debug.Log("YOUR BAD TIME");
+            }
         }
         else if (Input.GetKeyDown(inputs[1]) && beatsInput1.Count != 0)
         {
             // if good time.
             // else good time.
-            Debug.Log("UP");
-            beatsInput1.Peek().CheckNote();
-            //beatsInput1.Dequeue();
+            if (beatsInput1.Peek().CheckNote())
+            {
+                Debug.Log("GOOOOD TIME");
+            }
+            else
+            {
+                Debug.Log("YOUR BAD TIME");
+            }
         }
         else if (Input.GetKeyDown(inputs[2]) && beatsInput2.Count != 0)
         {
             // if good time.
             // else good time.
-            Debug.Log("DOWN");
-            beatsInput2.Peek().CheckNote();
-            //beatsInput2.Dequeue();
+            if (beatsInput2.Peek().CheckNote()){
+                Debug.Log("GOOOOD TIME");
+            }
+            else
+            {
+                Debug.Log("YOUR BAD TIME");
+            }
         }
         else if (Input.GetKeyDown(inputs[3]) && beatsInput3.Count != 0)
         {
             // if good time.
             // else good time.
-            Debug.Log("LEFT");
-            beatsInput3.Peek().CheckNote();
-            //beatsInput3.Dequeue();
+            if (beatsInput3.Peek().CheckNote())
+            {
+                Debug.Log("GOOOOD TIME");
+            }
+            else
+            {
+                Debug.Log("YOUR BAD TIME");
+            }
         }
 
     }

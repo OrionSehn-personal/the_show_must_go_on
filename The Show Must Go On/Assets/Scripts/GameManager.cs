@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(nextSpawn < Time.time )
         {
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
         gO.transform.position = lanes[lane];
 
         Beats beat = gO.GetComponent<Beats>();
-        beat.Initialize(player, keyType, speed, 0.5f, lanes[lane], keyA, keyB, horizontalMovement);
+        beat.Initialize(player, keyType, speed, 0.2f, lanes[lane], keyA, keyB, horizontalMovement);
 
         player.AddBeat(keyType, beat);
     }
