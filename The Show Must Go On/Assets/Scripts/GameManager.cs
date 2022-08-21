@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,16 +13,22 @@ public class GameManager : MonoBehaviour
     private GameObject[] beats;
 
     private int score = 420;
-
-    private float songLength = 60;
     [SerializeField]
-    private int bpm = 60;
-    private int bps;
+    private Text scoreText;
+    //36.5f;
+    private float songLength = 36.5f;
+    private float nextSongEnd;
+    private int nextDisableBlock;
+    
+    [SerializeField]
+    private int bpm = 125;
+    private float bps;
 
     private float nextSpawn;
 
     //public Vector3 lane1S, lane2S, lane3S, lane4S, lane5S, lane6S, lane7S, lane8S;
-    
+
+    private GameObject[] boxesGo = new GameObject[4];
     private Vector3[] boxes = new Vector3[4];
     // naming conventions: "boxVerticalLocation" + "boxHorizontalLocation" + "Beat approach direction" 
     private Vector2[] lanes = new Vector2[8];
@@ -29,25 +36,28 @@ public class GameManager : MonoBehaviour
     private float cameraBTop, cameraBBottom, cameraBRight, cameraBLeft;
 
     private List<KeyCode> inputKeys = new List<KeyCode> 
-                            { KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, 
+                            { KeyCode.LeftArrow, KeyCode.DownArrow, 
+                              KeyCode.UpArrow, KeyCode.RightArrow,
+                              KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, 
                               KeyCode.E, KeyCode.F, KeyCode.G, KeyCode.H, 
                               KeyCode.I, KeyCode.J, KeyCode.K, KeyCode.L,
                               KeyCode.M, KeyCode.N, KeyCode.O, KeyCode.P, 
                               KeyCode.Q, KeyCode.R, KeyCode.S, KeyCode.T,
                               KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X,
-                              KeyCode.Y, KeyCode.Z, KeyCode.LeftArrow,
-                              KeyCode.DownArrow, KeyCode.UpArrow, KeyCode.RightArrow};
+                              KeyCode.Y, KeyCode.Z};
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerInputs = player.Inputs;
 
-        GameObject[] boxes = player.GetBoxes();
+        boxesGo = player.GetBoxes();
         for (int i = 0; i < boxes.Length; i++)
         {
-            this.boxes[i] = boxes[i].transform.position;
+            boxes[i] = boxesGo[i].transform.position;
         }
+
+        nextDisableBlock = boxesGo.Length - 1;
 
         Camera camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
@@ -57,22 +67,25 @@ public class GameManager : MonoBehaviour
         cameraBLeft = -cameraBRight;
 
         // Set spawn points
-        lanes[0] = new Vector2(boxes[1].transform.position.x, cameraBTop);
-        lanes[1] = new Vector2(cameraBRight, boxes[1].transform.position.y);
+        lanes[0] = new Vector2(boxes[1].x, cameraBTop);
+        lanes[1] = new Vector2(cameraBRight, boxes[1].y);
         
-        lanes[2] = new Vector2(cameraBRight, boxes[2].transform.position.y);
-        lanes[3] = new Vector2(boxes[2].transform.position.x, cameraBBottom);
+        lanes[2] = new Vector2(cameraBRight, boxes[2].y);
+        lanes[3] = new Vector2(boxes[2].x, cameraBBottom);
 
-        lanes[4] = new Vector2(boxes[3].transform.position.x, cameraBBottom);
-        lanes[5] = new Vector2(cameraBLeft, boxes[3].transform.position.y);
+        lanes[4] = new Vector2(boxes[3].x, cameraBBottom);
+        lanes[5] = new Vector2(cameraBLeft, boxes[3].y);
 
-        lanes[6] = new Vector2(cameraBLeft, boxes[0].transform.position.y);
-        lanes[7] = new Vector2(boxes[0].transform.position.x, cameraBTop);
+        lanes[6] = new Vector2(cameraBLeft, boxes[0].y);
+        lanes[7] = new Vector2(boxes[0].x, cameraBTop);
 
         // get song length
-        bps = bpm/60;
-        nextSpawn = bps;
+        
+        bps = 1.0f/(bpm/60.0f);
+        
+        nextSpawn = 1/bps;
 
+        nextSongEnd = songLength;
     }
 
     void FixedUpdate()
@@ -82,61 +95,155 @@ public class GameManager : MonoBehaviour
             nextSpawn = Time.time + bps;
             SpawnBeat();
         }
+
+        if(nextDisableBlock > 0 && nextSongEnd < Time.time && nextDisableBlock > -1)
+        {
+            boxesGo[nextDisableBlock].SetActive(false);
+            nextDisableBlock -= 2;
+            nextSongEnd += Time.time + songLength;
+        }
+
+        scoreText.text = "Score: " + score;
     }
 
     private void SpawnBeat()
     {
         int lane = Random.Range(0, lanes.Length);
+
         int speed = 5; // temporary must change.
-        //float speed = 
+        int keyAIndex = -1;
+        int keyBIndex = -1;
+
         Vector3 keyA = Vector3.zero;
         Vector3 keyB = Vector3.zero;
         bool horizontalMovement = true;
+
         // can reduce to four lanes
         switch (lane)
         {
+            // negative movement direction
             case 0:
-                keyA = boxes[1];
-                keyB = boxes[2];
+                if (boxesGo[1].activeSelf)
+                {
+                    keyAIndex = 1;
+                    keyA = boxes[keyAIndex];
+                }
+
+                if (boxesGo[2].activeSelf)
+                {
+                    keyBIndex = 2;
+                    keyB = boxes[keyBIndex];
+                }
+                
                 speed *= -1;
                 horizontalMovement = false;
                 break;
             case 1:
-                keyA = boxes[1];
-                keyB = boxes[0];
+                if (boxesGo[1].activeSelf)
+                {
+                    keyAIndex = 1;
+                    keyA = boxes[keyAIndex];
+                }
+
+                if (boxesGo[0].activeSelf)
+                {
+                    keyBIndex = 0;
+                    keyB = boxes[keyBIndex];
+                }
+                
                 speed *= -1;
                 break;
             case 2:
-                keyA = boxes[2];
-                keyB = boxes[3];
+                if (boxesGo[2].activeSelf)
+                {
+                    keyAIndex = 2;
+                    keyA = boxes[keyAIndex];
+                }
+
+                if (boxesGo[3].activeSelf)
+                {
+                    keyBIndex = 3;
+                    keyB = boxes[keyBIndex];
+                }
+                
                 speed *= -1;
                 break;
             case 7:
-                keyA = boxes[0];
-                keyB = boxes[3];
+                if (boxesGo[0].activeSelf)
+                {
+                    keyAIndex = 0;
+                    keyA = boxes[keyAIndex];
+                }
+
+                if (boxesGo[3].activeSelf)
+                {
+                    keyBIndex = 3;
+                    keyB = boxes[keyBIndex];
+                }
+
                 speed *= -1;
                 horizontalMovement = false;
                 break;
             
+                // positive movement direction
             case 3:
-                keyA = boxes[2];
-                keyB = boxes[1];
+                if (boxesGo[2].activeSelf)
+                {
+                    keyAIndex = 2;
+                    keyA = boxes[keyAIndex];
+                }
+
+                if (boxesGo[1].activeSelf)
+                {
+                    keyBIndex = 1;
+                    keyB = boxes[keyBIndex];
+                }
+                
                 horizontalMovement = false;
                 break;
             case 4:
-                keyA = boxes[3];
-                keyB = boxes[0];
+                if (boxesGo[3].activeSelf)
+                {
+                    keyAIndex = 3;
+                    keyA = boxes[keyAIndex];
+                }
+
+                if (boxesGo[0].activeSelf)
+                {
+                    keyBIndex = 0;
+                    keyB = boxes[keyBIndex];
+                }
+                
                 horizontalMovement = false;
                 break;
             case 5:
-                keyA = boxes[3];
-                keyB = boxes[2];
+                if (boxesGo[3].activeSelf)
+                {
+                    keyAIndex = 3;
+                    keyA = boxes[keyAIndex];
+                }
+
+                if (boxesGo[2].activeSelf)
+                {
+                    keyBIndex = 2;
+                    keyB = boxes[keyBIndex];
+                }
+                    
                 break;
             case 6:
-                keyA = boxes[0];
-                keyB = boxes[1];
-                break;
+                if (boxesGo[0].activeSelf)
+                {
+                    keyAIndex = 0;
+                    keyA = boxes[keyAIndex];
+                }
+
+                if (boxesGo[1].activeSelf)
+                {
+                    keyBIndex = 1;
+                    keyB = boxes[keyBIndex];
+                }
                 
+                break;
         }
 
         int keyType = Random.Range(0, playerInputs.Length);
@@ -144,9 +251,18 @@ public class GameManager : MonoBehaviour
         gO.transform.position = lanes[lane];
 
         Beats beat = gO.GetComponent<Beats>();
-        beat.Initialize(player, keyType, speed, 0.2f, lanes[lane], keyA, keyB, horizontalMovement);
+        beat.Initialize(player, keyType, speed, 0.2f, lanes[lane], keyA, keyB, keyAIndex, keyBIndex, horizontalMovement);
 
         player.AddBeat(keyType, beat);
     }
 
+    public void AddScore(int value)
+    {
+        score += value;
+    }
+
+    public void SubtractScore(int value)
+    {
+        score -= value;
+    }
 }

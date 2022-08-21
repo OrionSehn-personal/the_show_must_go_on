@@ -14,11 +14,19 @@ public class Player : MonoBehaviour
     private Queue<Beats> beatsInput2 = new Queue<Beats> ();
     private Queue<Beats> beatsInput3 = new Queue<Beats> ();
 
+    [SerializeField] // Debug line DELETE
+    private static GameManager gameManager;
+
+    private static MusicLanesTweener musicBoxAnimator;
+
     private ConductorAnimationController conductor;
 
     // Start is called before the first frame update
     void Awake()
     {
+        gameManager = FindObjectOfType<GameManager>();
+        musicBoxAnimator = FindObjectOfType<MusicLanesTweener>();
+
         int i = 0;
         foreach(Transform child in transform.GetChild(0))       // init children.
         {
@@ -41,57 +49,65 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(inputs[0]) && beatsInput0.Count != 0)
         {
-            // if good time.
-            // else good time.
-            if (beatsInput0.Peek().CheckNote())
+
+            int score = beatsInput0.Peek().CheckNote();
+            if (score > 0)
             {
-                Debug.Log("GOOOOD TIME");
+                gameManager.AddScore(score);
+                Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
                 conductor.DoFlourishAnimation();
             }
             else
             {
-                Debug.Log("YOUR BAD TIME");
+                Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
+                SubtractScoreGM(-score);
             }
         }
         else if (Input.GetKeyDown(inputs[1]) && beatsInput1.Count != 0)
         {
-            // if good time.
-            // else good time.
-            if (beatsInput1.Peek().CheckNote())
+            int score = beatsInput1.Peek().CheckNote();
+            if (score > 0)
             {
-                Debug.Log("GOOOOD TIME");
+
+                gameManager.AddScore(score);
+                Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
                 conductor.DoFlourishAnimation();
             }
             else
             {
-                Debug.Log("YOUR BAD TIME");
+                Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
+                SubtractScoreGM(-score);
             }
         }
         else if (Input.GetKeyDown(inputs[2]) && beatsInput2.Count != 0)
         {
-            // if good time.
-            // else good time.
-            if (beatsInput2.Peek().CheckNote()){
-                Debug.Log("GOOOOD TIME");
+            int score = beatsInput2.Peek().CheckNote();
+            if (score > 0)
+            {
+                Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
+                gameManager.AddScore(score);
                 conductor.DoFlourishAnimation();
             }
             else
             {
-                Debug.Log("YOUR BAD TIME");
+                Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
+                SubtractScoreGM(-score);
             }
         }
         else if (Input.GetKeyDown(inputs[3]) && beatsInput3.Count != 0)
         {
-            // if good time.
-            // else good time.
-            if (beatsInput3.Peek().CheckNote())
+
+            int score = beatsInput3.Peek().CheckNote();
+            if (score > 0)
             {
-                Debug.Log("GOOOOD TIME");
+                Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
+                gameManager.AddScore(score);
                 conductor.DoFlourishAnimation();
             }
             else
             {
-                Debug.Log("YOUR BAD TIME");
+                Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
+                SubtractScoreGM(-score);
             }
         }
 
@@ -147,6 +163,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SubtractScoreGM(int value)
+    {
+        gameManager.SubtractScore(value);
+    }
+
     public GameObject[] GetBoxes()
     {
         return boxes;
@@ -156,5 +177,24 @@ public class Player : MonoBehaviour
     {
         get { return inputs; }
         set { inputs = value; }
+    }
+
+    public void AnimateMusicBoxes(int boxIndex)
+    {
+        switch (boxIndex)
+        {
+            case 0:
+                musicBoxAnimator.AnimateLane1();
+                break;
+            case 1:
+                musicBoxAnimator.AnimateLane2();
+                break;
+            case 2:
+                musicBoxAnimator.AnimateLane3();
+                break;
+            case 3:
+                musicBoxAnimator.AnimateLane4();
+                break;
+        }
     }
 }
