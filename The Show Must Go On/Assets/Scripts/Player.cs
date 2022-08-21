@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     private GameObject[] boxes = new GameObject[4];
 
-    private KeyCode[] inputs = {KeyCode.RightArrow, KeyCode.RightArrow, 
+    private KeyCode[] inputs = {KeyCode.RightArrow, KeyCode.UpArrow, 
                                 KeyCode.DownArrow, KeyCode.LeftArrow};
 
     private Queue<Beats> beatsInput0 = new Queue<Beats> ();
@@ -36,25 +36,33 @@ public class Player : MonoBehaviour
         {
             // if good time.
             // else good time.
-            beatsInput0.Dequeue ();
+            Debug.Log("RIGHT");
+            beatsInput0.Peek().CheckNote();
+            //beatsInput0.Dequeue();
         }
-        else if (Input.GetKeyDown(inputs[1]) && beatsInput0.Count != 0)
+        else if (Input.GetKeyDown(inputs[1]) && beatsInput1.Count != 0)
         {
             // if good time.
             // else good time.
-            beatsInput1.Dequeue();
+            Debug.Log("UP");
+            beatsInput1.Peek().CheckNote();
+            //beatsInput1.Dequeue();
         }
-        else if (Input.GetKeyDown(inputs[2]) && beatsInput0.Count != 0)
+        else if (Input.GetKeyDown(inputs[2]) && beatsInput2.Count != 0)
         {
             // if good time.
             // else good time.
-            beatsInput2.Dequeue();
+            Debug.Log("DOWN");
+            beatsInput2.Peek().CheckNote();
+            //beatsInput2.Dequeue();
         }
-        else if (Input.GetKeyDown(inputs[3]) && beatsInput0.Count != 0)
+        else if (Input.GetKeyDown(inputs[3]) && beatsInput3.Count != 0)
         {
             // if good time.
             // else good time.
-            beatsInput3.Dequeue();
+            Debug.Log("LEFT");
+            beatsInput3.Peek().CheckNote();
+            //beatsInput3.Dequeue();
         }
 
     }
@@ -72,16 +80,39 @@ public class Player : MonoBehaviour
         switch (input)
         {
             case 0:
-                beatsInput0.Enqueue (beats);
+                beatsInput0.Enqueue(beats);
                 break;
             case 1:
-                beatsInput1.Enqueue (beats);
+                beatsInput1.Enqueue(beats);
                 break;
             case 2:
-                beatsInput2.Enqueue (beats);
+                beatsInput2.Enqueue(beats);
                 break;
             case 3:
-                beatsInput3.Enqueue (beats);
+                beatsInput3.Enqueue(beats);
+                break;
+        }
+    }
+
+    public void DequeueBeat(int key)
+    {
+        switch (key)
+        {
+            case 0:
+                if (beatsInput0.Count == 0) return;
+                beatsInput0.Dequeue();
+                break;
+            case 1:
+                if (beatsInput1.Count == 0) return;
+                beatsInput1.Dequeue();
+                break;
+            case 2:
+                if (beatsInput2.Count == 0) return;
+                beatsInput2.Dequeue();
+                break;
+            case 3:
+                if (beatsInput3.Count == 0) return;
+                beatsInput3.Dequeue();
                 break;
         }
     }

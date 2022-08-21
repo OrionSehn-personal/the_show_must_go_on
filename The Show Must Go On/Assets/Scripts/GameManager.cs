@@ -144,7 +144,9 @@ public class GameManager : MonoBehaviour
         gO.transform.position = lanes[lane];
 
         Beats beat = gO.GetComponent<Beats>();
-        beat.Initialize(playerInputs[keyType], speed, 0.5f, lanes[lane], keyA, keyB, horizontalMovement);
+        beat.Initialize(player, keyType, speed, 0.5f, lanes[lane], keyA, keyB, horizontalMovement);
+
+        player.AddBeat(keyType, beat);
     }
 
 }
