@@ -15,11 +15,16 @@ public class Player : MonoBehaviour
     private Queue<Beats> beatsInput3 = new Queue<Beats> ();
 
     [SerializeField] // Debug line DELETE
-    private static readonly GameManager gameManager = FindObjectOfType<GameManager>();
+    private static GameManager gameManager;
+
+    private static MusicLanesTweener musicBoxAnimator;
 
     // Start is called before the first frame update
     void Awake()
     {
+        gameManager = FindObjectOfType<GameManager>();
+        musicBoxAnimator = FindObjectOfType<MusicLanesTweener>();
+
         int i = 0;
         foreach(Transform child in transform.GetChild(0))       // init children.
         {
@@ -37,8 +42,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(inputs[0]) && beatsInput0.Count != 0)
         {
-            // if good time.
-            // else good time.
+
             int score = beatsInput0.Peek().CheckNote();
             if (score > 0)
             {
@@ -48,13 +52,11 @@ public class Player : MonoBehaviour
             else
             {
                 Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
-                gameManager.SubtractScore(score);
+                SubtractScoreGM(-score);
             }
         }
         else if (Input.GetKeyDown(inputs[1]) && beatsInput1.Count != 0)
         {
-            // if good time.
-            // else good time.
             int score = beatsInput1.Peek().CheckNote();
             if (score > 0)
             {
@@ -64,13 +66,11 @@ public class Player : MonoBehaviour
             else
             {
                 Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
-                gameManager.SubtractScore(score);
+                SubtractScoreGM(-score);
             }
         }
         else if (Input.GetKeyDown(inputs[2]) && beatsInput2.Count != 0)
         {
-            // if good time.
-            // else good time.
             int score = beatsInput2.Peek().CheckNote();
             if (score > 0)
             {
@@ -80,13 +80,12 @@ public class Player : MonoBehaviour
             else
             {
                 Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
-                gameManager.SubtractScore(score);
+                SubtractScoreGM(-score);
             }
         }
         else if (Input.GetKeyDown(inputs[3]) && beatsInput3.Count != 0)
         {
-            // if good time.
-            // else good time.
+
             int score = beatsInput3.Peek().CheckNote();
             if (score > 0)
             {
@@ -96,7 +95,7 @@ public class Player : MonoBehaviour
             else
             {
                 Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
-                gameManager.SubtractScore(score);
+                SubtractScoreGM(-score);
             }
         }
 
@@ -152,6 +151,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SubtractScoreGM(int value)
+    {
+        gameManager.SubtractScore(value);
+    }
+
     public GameObject[] GetBoxes()
     {
         return boxes;
@@ -161,5 +165,24 @@ public class Player : MonoBehaviour
     {
         get { return inputs; }
         set { inputs = value; }
+    }
+
+    public void AnimateMusicBoxes(int boxIndex)
+    {
+        switch (boxIndex)
+        {
+            case 0:
+                musicBoxAnimator.AnimateLane1();
+                break;
+            case 1:
+                musicBoxAnimator.AnimateLane2();
+                break;
+            case 2:
+                musicBoxAnimator.AnimateLane3();
+                break;
+            case 3:
+                musicBoxAnimator.AnimateLane4();
+                break;
+        }
     }
 }

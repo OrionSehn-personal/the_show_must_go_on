@@ -11,9 +11,13 @@ public class Beats : MonoBehaviour
     public float speed;
     public float tolerance;
     public Vector3 spawnerLocation;
+    private int keyAIndex;
+    private int keyBIndex;
     private int correctInput;
-
+    private bool keyCorrect = false;
     private Player player;
+
+    private bool destroyed = false;
     // Creates a beat object, takes the location of the spawner, and the two instruments along the lane which it will pass.
     //public Beats(KeyCode correctInput, int speed, float tolerance,
     //    Vector3 spawnerLocation, Vector3 inputKeyA, Vector3 inputKeyB, bool horizontalMovement)
@@ -29,20 +33,6 @@ public class Beats : MonoBehaviour
     //    this.horizontalMovement = horizontalMovement;
     //}
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    
-        
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
     private void FixedUpdate()
     {
         if (horizontalMovement)
@@ -53,13 +43,19 @@ public class Beats : MonoBehaviour
 
     // Creates a beat object, takes the location of the spawner, and the two instruments along the lane which it will pass.
     public void Initialize(Player player, int correctInput, int speed, float tolerance,
-        Vector3 spawnerLocation, Vector3 inputKeyA, Vector3 inputKeyB, bool horizontalMovement)
+        Vector3 spawnerLocation, Vector3 inputKeyA, Vector3 inputKeyB, int keyAIndex, int keyBIndex, bool horizontalMovement)
     {
         this.player = player;
         this.startTime = Time.time;
         this.speed = speed;
-        this.goodTime1 = Mathf.Abs((Vector3.Distance(inputKeyA, spawnerLocation) / speed));
-        this.goodTime2 = Mathf.Abs((Vector3.Distance(inputKeyB, spawnerLocation) / speed));
+
+        this.keyAIndex = keyAIndex; 
+        this.keyBIndex = keyBIndex;
+        if(keyAIndex != -1)
+            this.goodTime1 = Mathf.Abs((Vector3.Distance(inputKeyA, spawnerLocation) / speed));
+        if(keyBIndex != -1)
+            this.goodTime2 = Mathf.Abs((Vector3.Distance(inputKeyB, spawnerLocation) / speed));
+
         //this.goodTime1 = this.start + ((inputKeyA - spawnerLocation) / speed);
         //this.goodTime2 = this.start + ((inputKeyB - spawnerLocation) / speed);
 
@@ -67,59 +63,40 @@ public class Beats : MonoBehaviour
         this.tolerance = tolerance;
         this.horizontalMovement = horizontalMovement;
 
-        Destroy(gameObject, goodTime2);
+        Destroy(gameObject, goodTime2 > 0 ? goodTime2 : goodTime1);
     }
 
     private void OnDestroy()
     {
-        player.DequeueBeat(correctInput);
+        destroyed = true;
+        if (!keyCorrect)
+        {
+            player.DequeueBeat(correctInput);
+            player.SubtractScoreGM(20);
+        }
     }
 
     public int CheckNote()
     {
-        Debug.Log("Good time 1 = " + goodTime1 + startTime);
-        Debug.Log("Good time 2 = " + goodTime2 + startTime);
-        if(Time.time < goodTime1 + tolerance + startTime && Time.time > goodTime1 - tolerance + startTime)
+        if (destroyed)
+            return 0;
+        keyCorrect = true;
+        if(keyAIndex != -1 && Time.time < goodTime1 + tolerance + startTime && 
+            Time.time > goodTime1 - tolerance + startTime)
         {
-            Destroy(gameObject);
+            player.AnimateMusicBoxes(keyAIndex);
+            player.DequeueBeat(correctInput);
             return 20;
         }
-        else if (Time.time < goodTime2 + tolerance + startTime && Time.time > goodTime2 - tolerance + startTime)
+        else if (keyAIndex != -1 && Time.time < goodTime2 + tolerance + startTime && 
+            Time.time > goodTime2 - tolerance + startTime)
         {
-            Destroy(gameObject);
+            player.AnimateMusicBoxes(keyBIndex);
+            player.DequeueBeat(correctInput);
             return 10;
         }
-        Destroy(gameObject);
+        player.DequeueBeat(correctInput);
+        gameObject.SetActive(false);
         return -20;
     }
-
-    //void CheckNote(float curTime, KeyCode key)
-    //{
-
-    //    if (key == correctInput)
-    //    {
-    //        if (Mathf.Abs(curTime - this.goodTime1))
-    //        {
-    //            Debug.Log("correct inside box1");
-    //        }
-
-    //        if (Mathf.Abs(curTime - this.goodTime2))
-    //        {
-    //            Debug.Log("correct inside box2");
-    //        }
-    //    }
-
-    //    if (Mathf.Abs(curTime - this.goodTime1))
-    //    {
-    //        Debug.Log("inside box1");
-    //    }
-
-    //    if (Mathf.Abs(curTime - this.goodTime2))
-    //    {
-    //        Debug.Log("inside box2");
-    //    }
-
-
-    //}
-
 }
