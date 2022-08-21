@@ -82,25 +82,25 @@ MonoBehaviour:
       Path: event:/Missed Cue - Marimba
     percussionMisfireEvent:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
+        Data1: 413964015
+        Data2: 1295550583
+        Data3: 408926366
+        Data4: -750758298
+      Path: event:/Missed Cue - Percussion
     shakerMisfireEvent:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
+        Data1: -288064017
+        Data2: 1183452318
+        Data3: -57359998
+        Data4: -1178372712
+      Path: event:/Missed Cue - Shaker-Guiro
     tubaMisfireEvent:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
+        Data1: -2098095188
+        Data2: 1294690478
+        Data3: -1698676546
+        Data4: 648335634
+      Path: event:/Missed Cue - Tuba
     genericMisfireEvent:
       Guid:
         Data1: -2065861146
@@ -108,3 +108,32 @@ MonoBehaviour:
         Data3: 1262032804
         Data4: 1158248670
       Path: event:/Missed Cue - Misc
+  silenceHandler:
+    marimbaSilenceEvent:
+      Guid:
+        Data1: -853253905
+        Data2: 1314028901
+        Data3: 1574704540
+        Data4: -1568410537
+      Path: event:/Silence Marimba
+    percussionSilenceEvent:
+      Guid:
+        Data1: 781927208
+        Data2: 1118881308
+        Data3: 1099925692
+        Data4: 1155975947
+      Path: event:/Silence Percussion
+    shakerSilenceEvent:
+      Guid:
+        Data1: -611471568
+        Data2: 1168950354
+        Data3: 90179510
+        Data4: 848370591
+      Path: event:/Silence Shakers-Guiro
+    tubaSilenceEvent:
+      Guid:
+        Data1: 1401119651
+        Data2: 1287162715
+        Data3: 573326472
+        Data4: 1342013987
+      Path: event:/Silence Tuba
