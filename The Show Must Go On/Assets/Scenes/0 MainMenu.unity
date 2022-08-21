@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 0}
   prompt: {fileID: 0}
-  nextScene: Assets/Scenes/Art Implementation Test 2.unity
+  nextScene: Assets/Scenes/Beat Test.unity
 --- !u!1 &1585081733
 GameObject:
   m_ObjectHideFlags: 0

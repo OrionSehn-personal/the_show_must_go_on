@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
                 SubtractScoreGM(-score);
+                gameManager.MissedInstrument(0);
             }
         }
         else if (Input.GetKeyDown(inputs[1]) && beatsInput1.Count != 0)
@@ -77,6 +78,8 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
                 SubtractScoreGM(-score);
+                gameManager.MissedInstrument(1);
+                
             }
         }
         else if (Input.GetKeyDown(inputs[2]) && beatsInput2.Count != 0)
@@ -92,6 +95,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
                 SubtractScoreGM(-score);
+                gameManager.MissedInstrument(2);
             }
         }
         else if (Input.GetKeyDown(inputs[3]) && beatsInput3.Count != 0)
@@ -108,9 +112,9 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("YOUR BAD TIME"); // DELETE ME WHEN BUILDING
                 SubtractScoreGM(-score);
+                gameManager.MissedInstrument(3);
             }
         }
-
     }
 
     /// <summary>
@@ -196,5 +200,10 @@ public class Player : MonoBehaviour
                 musicBoxAnimator.AnimateLane4();
                 break;
         }
+    }
+
+    public void MissedNoteAudio()
+    {
+        gameManager.MissedInstrument(Random.Range(0, 4));
     }
 }

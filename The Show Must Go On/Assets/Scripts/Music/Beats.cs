@@ -73,6 +73,7 @@ public class Beats : MonoBehaviour
         {
             player.DequeueBeat(correctInput);
             player.SubtractScoreGM(20);
+            player.MissedNoteAudio();
         }
     }
 
@@ -86,6 +87,7 @@ public class Beats : MonoBehaviour
         {
             player.AnimateMusicBoxes(keyAIndex);
             player.DequeueBeat(correctInput);
+            gameObject.SetActive(false);
             return 20;
         }
         else if (keyAIndex != -1 && Time.time < goodTime2 + tolerance + startTime && 
@@ -93,6 +95,7 @@ public class Beats : MonoBehaviour
         {
             player.AnimateMusicBoxes(keyBIndex);
             player.DequeueBeat(correctInput);
+            gameObject.SetActive(false);
             return 10;
         }
         player.DequeueBeat(correctInput);

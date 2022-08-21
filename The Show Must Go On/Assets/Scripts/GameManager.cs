@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     private int score = 420;
     [SerializeField]
+    private GameObject loseObj;
+    [SerializeField]
     private Text scoreText;
     //36.5f;
     private float songLength = 36.5f;
@@ -46,10 +48,14 @@ public class GameManager : MonoBehaviour
                               KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X,
                               KeyCode.Y, KeyCode.Z};
 
+    private AudioManager audioManager;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerInputs = player.Inputs;
+        audioManager = FindObjectOfType<AudioManager>();
+        audioManager.StartMusic();
 
         boxesGo = player.GetBoxes();
         for (int i = 0; i < boxes.Length; i++)
@@ -98,11 +104,21 @@ public class GameManager : MonoBehaviour
 
         if(nextDisableBlock > 0 && nextSongEnd < Time.time && nextDisableBlock > -1)
         {
+            switch (nextDisableBlock)
+            {
+                case 3:
+                    audioManager.SilenceShaker();
+                    break;
+                case 1:
+                    audioManager.SilenceTuba();
+                    break;
+            }
             boxesGo[nextDisableBlock].SetActive(false);
             nextDisableBlock -= 2;
             nextSongEnd += Time.time + songLength;
         }
 
+        if (score < -500) loseObj.SetActive(true);
         scoreText.text = "Score: " + score;
     }
 
@@ -264,5 +280,24 @@ public class GameManager : MonoBehaviour
     public void SubtractScore(int value)
     {
         score -= value;
+    }
+
+    public void MissedInstrument(int value)
+    {
+        switch (value)
+        {
+            case 0:
+                audioManager.MisfirePercussion();
+                break;
+            case 1:
+                audioManager.MisfireTuba();
+                break;
+            case 2:
+                audioManager.MisfireShaker();
+                break;
+            case 3:
+                audioManager.MisfirePercussion();
+                break;
+        }
     }
 }
