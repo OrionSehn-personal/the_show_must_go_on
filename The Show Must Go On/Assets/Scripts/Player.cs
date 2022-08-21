@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
 
     private static MusicLanesTweener musicBoxAnimator;
 
+    private ConductorAnimationController conductor;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -35,6 +37,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        conductor = FindObjectOfType<ConductorAnimationController>();
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -48,6 +55,7 @@ public class Player : MonoBehaviour
             {
                 gameManager.AddScore(score);
                 Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
+                conductor.DoFlourishAnimation();
             }
             else
             {
@@ -60,8 +68,10 @@ public class Player : MonoBehaviour
             int score = beatsInput1.Peek().CheckNote();
             if (score > 0)
             {
+
                 gameManager.AddScore(score);
                 Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
+                conductor.DoFlourishAnimation();
             }
             else
             {
@@ -76,6 +86,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
                 gameManager.AddScore(score);
+                conductor.DoFlourishAnimation();
             }
             else
             {
@@ -91,6 +102,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("GOOOOD TIME"); // DELETE ME WHEN BUILDING
                 gameManager.AddScore(score);
+                conductor.DoFlourishAnimation();
             }
             else
             {
