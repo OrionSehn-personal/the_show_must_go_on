@@ -1487,6 +1487,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c986de2c60d3b4f9f3c560ca286912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idleAnim: {fileID: 1616066143}
+  flourishAnim: {fileID: 2105953067}
+  flourishAnimTime: 0.55
 --- !u!4 &2098567371
 Transform:
   m_ObjectHideFlags: 0
